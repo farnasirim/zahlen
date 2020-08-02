@@ -10,7 +10,7 @@
     :license: MIT, see LICENSE for more details.
 """
 
-import avl_tree
+from . import avl_tree
 
 
 class Node(avl_tree.Node):
@@ -74,6 +74,28 @@ class OrderStatisticsTree(avl_tree.AVLTree):
                     return root.key     # Smallest element is the root
                 else:
                     root = root.right   # Smallest element in the right subtree
+
+    def get_rank_apx(self, val, root=None):
+        if not root:
+            root = self.root
+
+        if not root:
+            raise Exception('Tree is empty!')
+
+        best_index = 0
+        best_value = float("inf")
+        current_index = 0
+        while root:
+            if abs(root.key - val) < abs(best_value - val):
+                best_value = root.key
+                best_index = current_index + root.left_weight + 1
+            if val < root.key:
+                root = root.left
+            else:
+                current_index += root.left_weight + 1
+                root = root.right
+        return best_index
+
 
     def kth_successor(self, k, key):
         """Returns the kth-successor of a key."""

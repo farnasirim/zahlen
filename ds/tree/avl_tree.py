@@ -10,7 +10,7 @@
     :license: MIT, see LICENSE for more details.
 """
 
-import binary_search_tree
+from . import binary_search_tree
 
 
 class Node(binary_search_tree.Node):
